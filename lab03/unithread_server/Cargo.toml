@@ -1,0 +1,8 @@
+[package]
+name = "unithread_sevrer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+httparse = "1"
+urlencoding = "2"
