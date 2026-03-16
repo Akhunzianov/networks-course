@@ -16,5 +16,5 @@ cargo run -- <port> <concurrency_level>
 
 ```bash
 cd client
-cargo run -- <host> <host_port> <file_path>
+cargo run -- <server> <server_port> <file_path>
 ```
