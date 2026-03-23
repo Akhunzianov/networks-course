@@ -32,7 +32,237 @@ _(*) Вы должны заменить стоящий здесь 8888 на но
 Приложите скрины или логи работы сервера.
 
 #### Демонстрация работы
-todo
+Проксирование существующего адреса
+```
+❯ curl http://localhost:8000/neverssl.com
+<html>
+        <head>
+                <title>NeverSSL - Connecting ... </title>
+                <style>
+                body {
+                        font-family: Montserrat, helvetica, arial, sans-serif;
+                        font-size: 16x;
+                        color: #444444;
+                        margin: 0;
+                }
+                h2 {
+                        font-weight: 700;
+                        font-size: 1.6em;
+                        margin-top: 30px;
+                }
+                p {
+                        line-height: 1.6em;
+                }
+                .container {
+                        max-width: 650px;
+                        margin: 20px auto 20px auto;
+                        padding-left: 15px;
+                        padding-right: 15px
+                }
+                .header {
+                        background-color: #42C0FD;
+                        color: #FFFFFF;
+                        padding: 10px 0 10px 0;
+                        font-size: 2.2em;
+                }
+                .notice {
+                        background-color: red;
+                        color: white;
+                        padding: 10px 0 10px 0;
+                        font-size: 1.25em;
+                        animation: flash 4s infinite;
+                }
+                @keyframes flash {
+                0% {
+                        background-color: red;
+                }
+                50% {
+                        background-color: #AA0000;
+                }
+                0% {
+                        background-color: red;
+                }
+                }
+                <!-- CSS from Mark Webster https://gist.github.com/markcwebster/9bdf30655cdd5279bad13993ac87c85d -->
+                </style>
+
+                <script>
+                        var adjectives = [ 'cool' , 'calm' , 'relaxed', 'soothing', 'serene', 'slow',
+                                                        'beautiful', 'wonderful', 'wonderous', 'fun', 'good',
+                                                        'glowing', 'inner', 'grand', 'majestic', 'astounding',
+                                                        'fine', 'splendid', 'transcendent', 'sublime', 'whole',
+                                                        'unique', 'old', 'young', 'fresh', 'clear', 'shiny',
+                                                        'shining', 'lush', 'quiet', 'bright', 'silver' ];
+
+                        var nouns =       [ 'day', 'dawn', 'peace', 'smile', 'love', 'zen', 'laugh',
+                                                        'yawn', 'poem', 'song', 'joke', 'verse', 'kiss', 'sunrise',
+                                                        'sunset', 'eclipse', 'moon', 'rainbow', 'rain', 'plan',
+                                                        'play', 'chart', 'birds', 'stars', 'pathway', 'secret',
+                                                        'treasure', 'melody', 'magic', 'spell', 'light', 'morning'];
+
+                        var prefix =
+                                        // Choose 3 zen adjectives
+                                        adjectives.sort(function(){return 0.5-Math.random()}).slice(-3).join('')
+                                        +
+                                        // Coupled with a zen noun
+                                        nouns.sort(function(){return 0.5-Math.random()}).slice(-1).join('');
+                        window.location.href = 'http://' + prefix + '.neverssl.com/online';
+                </script>
+        </head>
+        <body>
+        <noscript>
+                <div class="notice">
+                        <div class="container">
+                                ⚠️ JavaScript appears to be disabled. NeverSSL's cache-busting works better if you enable JavaScript for <code>neverssl.com</code>.
+                        </div>
+                </div>
+        </noscript>
+        <div class="header">
+                <div class="container">
+                <h1>NeverSSL</h1>
+                </div>
+        </div>
+        <div class="content">
+        <div class="container">
+
+        <h1 id="status"></h1>
+        <script>document.querySelector("#status").textContent = "Connecting ...";</script>
+        <noscript>
+
+                <h2>What?</h2>
+                <p>This website is for when you try to open Facebook, Google, Amazon, etc
+                on a wifi network, and nothing happens. Type "http://neverssl.com"
+                into your browser's url bar, and you'll be able to log on.</p>
+
+                <h2>How?</h2>
+                <p>neverssl.com will never use SSL (also known as TLS). No
+                encryption, no strong authentication, no <a
+                href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HSTS</a>,
+                no HTTP/2.0, just plain old unencrypted HTTP and forever stuck in the dark
+                ages of internet security.</p>
+
+                <h2>Why?</h2>
+                <p>Normally, that's a bad idea. You should always use SSL and secure
+                encryption when possible. In fact, it's such a bad idea that most websites
+                are now using https by default.</p>
+
+                <p>And that's great, but it also means that if you're relying on
+                poorly-behaved wifi networks, it can be hard to get online.  Secure
+                browsers and websites using https make it impossible for those wifi
+                networks to send you to a login or payment page. Basically, those networks
+                can't tap into your connection just like attackers can't. Modern browsers
+                are so good that they can remember when a website supports encryption and
+                even if you type in the website name, they'll use https.</p>
+
+                <p>And if the network never redirects you to this page, well as you can
+                see, you're not missing much.</p>
+
+        <a href="https://twitter.com/neverssl">Follow @neverssl</a>
+
+        </noscript>
+
+        </div>
+        </div>
+
+        </body>
+</html>
+```
+
+Проксирование несуществующего адреса
+```
+❯ curl http://localhost:8000/neverssl.c
+Failed: error sending request for url (http://neverssl.c/)
+```
+
+POST метод:
+```
+❯ curl -v http://localhost:8000/httpbin.org/post \
+  -H "Content-Type: application/json" \
+  -d '{"hello":"world"}'
+* Host localhost:8000 was resolved.
+* IPv6: ::1
+* IPv4: 127.0.0.1
+*   Trying [::1]:8000...
+* connect to ::1 port 8000 from ::1 port 50756 failed: Connection refused
+*   Trying 127.0.0.1:8000...
+* Connected to localhost (127.0.0.1) port 8000
+> POST /httpbin.org/post HTTP/1.1
+> Host: localhost:8000
+> User-Agent: curl/8.7.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 17
+>
+* upload completely sent off: 17 bytes
+< HTTP/1.1 200 OK
+< Content-Length: 427
+< Connection: close
+<
+{
+  "args": {},
+  "data": "{\"hello\":\"world\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Content-Length": "17",
+    "Content-Type": "application/json",
+    "Host": "localhost",
+    "User-Agent": "curl/8.7.1",
+    "X-Amzn-Trace-Id": "Root=1-69c1746e-6af7eb801e7176836215c7ce"
+  },
+  "json": {
+    "hello": "world"
+  },
+  "origin": "193.58.120.106",
+  "url": "http://localhost/post"
+}
+* Closing connection
+```
+
+Лог сервера
+```
+[1774285920] >> [user->proxy] GET /neverssl.com
+[1774285920] >>   Host: localhost:8000
+[1774285920] >>   User-Agent: curl/8.7.1
+[1774285920] >>   Accept: */*
+[1774285920] >> [proxy->server] GET http://neverssl.com
+[1774285924] << [server->proxy] 200 OK
+[1774285924] <<   date: Mon, 23 Mar 2026 17:12:04 GMT
+[1774285924] <<   server: Apache/2.4.66 ()
+[1774285924] <<   upgrade: h2,h2c
+[1774285924] <<   connection: Upgrade
+[1774285924] <<   last-modified: Wed, 29 Jun 2022 00:23:33 GMT
+[1774285924] <<   etag: "f79-5e28b29d38e93"
+[1774285924] <<   accept-ranges: bytes
+[1774285924] <<   content-length: 3961
+[1774285924] <<   vary: Accept-Encoding
+[1774285924] <<   content-type: text/html; charset=UTF-8
+[1774285924] << [proxy->user] 200 OK body: 3961 bytes
+[1774285928] >> [user->proxy] GET /neverssl.c
+[1774285928] >>   Host: localhost:8000
+[1774285928] >>   User-Agent: curl/8.7.1
+[1774285928] >>   Accept: */*
+[1774285928] >> [proxy->server] GET http://neverssl.c
+[1774285928] << [proxy->user] 502 Bad Gateway: error sending request for url (http://neverssl.c/)
+[1774285934] >> [user->proxy] POST /httpbin.org/post
+[1774285934] >>   Host: localhost:8000
+[1774285934] >>   User-Agent: curl/8.7.1
+[1774285934] >>   Accept: */*
+[1774285934] >>   Content-Type: application/json
+[1774285934] >>   Content-Length: 17
+[1774285934] >>   body: 17 bytes
+[1774285934] >> [proxy->server] POST http://httpbin.org/post
+[1774285935] << [server->proxy] 200 OK
+[1774285935] <<   date: Mon, 23 Mar 2026 17:12:14 GMT
+[1774285935] <<   content-type: application/json
+[1774285935] <<   content-length: 427
+[1774285935] <<   connection: keep-alive
+[1774285935] <<   server: gunicorn/19.9.0
+[1774285935] <<   access-control-allow-origin: *
+[1774285935] <<   access-control-allow-credentials: true
+[1774285935] << [proxy->user] 200 OK body: 427 bytes
+```
 
 ### Б. Прокси-сервер с кешированием (4 балла)
 Когда прокси-сервер получает запрос, он проверяет, есть ли запрашиваемый объект в кэше, и,
@@ -52,7 +282,42 @@ todo
 Приложите скрины или логи, из которых понятно, что ответ на повторный запрос был взят из кэша.
 
 #### Демонстрация работы
-todo
+3 раза с помощью curl обращался к neverssl.com. В логе написано, что значение взято из кэша при втором обращении, также в этом можно убелиться по времени работы в сравнении с первым запросом (время записано в квадратных скобках). Перед 3 запросом я подождял пока копия в кэше протухнет. Видно что в 3 раз прокси сходил на сервер, получил 304 и уже только тогда ответил значением из кэша.
+```
+[1774289580] >> [user->proxy] GET /neverssl.com
+[1774289580] >>   Host: localhost:8000
+[1774289580] >>   User-Agent: curl/8.7.1
+[1774289580] >>   Accept: */*
+[1774289580] >> [proxy->server] GET http://neverssl.com
+[1774289585] << [server->proxy] 200 OK
+[1774289585] <<   date: Mon, 23 Mar 2026 18:13:04 GMT
+[1774289585] <<   server: Apache/2.4.66 ()
+[1774289585] <<   upgrade: h2,h2c
+[1774289585] <<   connection: Upgrade
+[1774289585] <<   last-modified: Wed, 29 Jun 2022 00:23:33 GMT
+[1774289585] <<   etag: "f79-5e28b29d38e93"
+[1774289585] <<   accept-ranges: bytes
+[1774289585] <<   content-length: 3961
+[1774289585] <<   vary: Accept-Encoding
+[1774289585] <<   content-type: text/html; charset=UTF-8
+[1774289585] << [proxy->user] 200 OK body: 3961 bytes
+[1774289591] >> [user->proxy] GET /neverssl.com
+[1774289591] >>   Host: localhost:8000
+[1774289591] >>   User-Agent: curl/8.7.1
+[1774289591] >>   Accept: */*
+[1774289591] << [proxy->user] 200 OK (cached)
+[1774289591] <<   body: 3961 bytes
+[1774289737] >> [proxy->server] GET http://neverssl.com
+[1774289739] << [server->proxy] 304 Not Modified
+[1774289739] <<   date: Mon, 23 Mar 2026 18:15:39 GMT
+[1774289739] <<   server: Apache/2.4.66 ()
+[1774289739] <<   upgrade: h2,h2c
+[1774289739] <<   connection: Upgrade
+[1774289739] <<   last-modified: Wed, 29 Jun 2022 00:23:33 GMT
+[1774289739] <<   etag: "f79-5e28b29d38e93"
+[1774289739] <<   accept-ranges: bytes
+[1774289739] << [proxy->user] 200 OK (revalidated)
+```
 
 ### В. Черный список (2 балла)
 Прокси-сервер отслеживает страницы и не пускает на те, которые попадают в черный список. Вместо
@@ -62,7 +327,15 @@ todo
 Приложите скрины или логи запроса из черного списка.
 
 #### Демонстрация работы
-todo
+Добавил neverssl.com в черный список
+```
+[1774292691] >> [user->proxy] GET /neverssl.com
+[1774292691] >>   Host: localhost:8000
+[1774292691] >>   User-Agent: curl/8.7.1
+[1774292691] >>   Accept: */*
+[1774292691] << [proxy->user] 403 Forbidden
+[1774292691] <<   body: http://neverssl.com is in the blacklist
+```
 
 ## Wireshark. Работа с DNS
 Для каждого задания в этой секции приложите скрин с подтверждением ваших ответов.
