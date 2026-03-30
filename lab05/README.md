@@ -4,6 +4,7 @@
 
 **Plain text:**
 ```bash
+cd mail_clients_libs
 cargo run -- --to <recipient@example.com> --from <sender@example.com> \
   --smtp-host <host-name> --smtp-port <host-port> \
   --username <YOUR_USERNAME> --password <YOUR_PASSWORD> \
@@ -12,6 +13,7 @@ cargo run -- --to <recipient@example.com> --from <sender@example.com> \
 
 **HTML:**
 ```bash
+cd mail_clients_libs
 cargo run -- --to <recipient@example.com> --from <sender@example.com> \
   --smtp-host <host-name> --smtp-port <host-port> \
   --username <YOUR_USERNAME> --password <YOUR_PASSWORD> \
@@ -24,6 +26,7 @@ cargo run -- --to <recipient@example.com> --from <sender@example.com> \
 
 **Plain text:**
 ```bash
+cd smtp_client
 cargo run -- --to <recipient@example.com> --from <sender@example.com> \
   --smtp-host <host-name> --smtp-port <host-port> \
   --username <YOUR_USERNAME> --password <YOUR_PASSWORD> \
@@ -32,6 +35,7 @@ cargo run -- --to <recipient@example.com> --from <sender@example.com> \
 
 **Image:**
 ```bash
+cd smtp_client
 cargo run -- --to <recipient@example.com> --from <sender@example.com> \
   --smtp-host <host-name> --smtp-port <host-port> \
   --username <YOUR_USERNAME> --password <YOUR_PASSWORD> \
@@ -40,6 +44,7 @@ cargo run -- --to <recipient@example.com> --from <sender@example.com> \
 
 **No TLS:**
 ```bash
+cd smtp_client
 cargo run -- --to <recipient@example.com> --from <sender@example.com> \
   --smtp-host mail.spbu.ru --smtp-port 25 --no-starttls \
   --subject "Hello" --body "Plain text message"
@@ -51,10 +56,12 @@ cargo run -- --to <recipient@example.com> --from <sender@example.com> \
 
 **Server:**
 ```bash
+cd remote_launch
 cargo run --bin server -- <port>
 ```
 
 **Client:**
 ```bash
+cd remote_launch
 cargo run --bin client -- <sevrer-address (e.g. localhost:8000)> "<your shell cmd (e.g. ping -c 3 yandex.ru)>"
 ```
