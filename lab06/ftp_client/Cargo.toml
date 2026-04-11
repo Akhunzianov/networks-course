@@ -1,0 +1,8 @@
+[package]
+name = "ftp_client"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "ftp_client"
+path = "src/main.rs"
