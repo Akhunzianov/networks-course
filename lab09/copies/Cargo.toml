@@ -1,0 +1,12 @@
+[package]
+name = "copies"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "copies"
+path = "src/main.rs"
+
+[dependencies]
+ctrlc = "3"
+socket2 = { version = "0.5", features = ["all"] }
