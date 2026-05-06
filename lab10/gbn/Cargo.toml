@@ -1,0 +1,12 @@
+[package]
+name = "gbn"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "gbn_server"
+path = "src/server.rs"
+
+[[bin]]
+name = "gbn_client"
+path = "src/client.rs"
