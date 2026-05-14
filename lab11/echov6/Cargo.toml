@@ -1,0 +1,12 @@
+[package]
+name = "echov6"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "echov6_server"
+path = "src/server.rs"
+
+[[bin]]
+name = "echov6_client"
+path = "src/client.rs"
